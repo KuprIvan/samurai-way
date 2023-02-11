@@ -1,0 +1,20 @@
+.dialogs {
+    display: flex;
+    font-size: 2rem;
+}
+.dialogsItem {
+    padding: 10px;
+}
+.dialogsItem .active {
+    color: gold;
+}
+.dialog{
+    font-size: 2rem;
+}
+
+.messages {
+    padding: 10px;
+}
+.message {
+    font-size: 2rem;
+}
