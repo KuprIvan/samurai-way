@@ -9,7 +9,7 @@ type DialogItemType = {
 }
 
 type MessageItemType = {
-    title: string
+    message: string
 }
 const DialogItem: FC<DialogItemType> = (props) => {
     let path = `/dialogs/${props.id}`
@@ -23,7 +23,7 @@ const DialogItem: FC<DialogItemType> = (props) => {
 const MessageItem: FC<MessageItemType> = (props)  => {
   return (
       <div className={s.message}>
-          {props.title}
+          {props.message}
       </div>
   )
 }
@@ -41,9 +41,9 @@ const Dialogs = (props: any) => {
                 <DialogItem name='Sveta' id='5'/>
             </div>
             <div className={s.messages}>
-                <MessageItem title='Hi' />
-                <MessageItem title='Yo' />
-                <MessageItem title='Bye' />
+                <MessageItem message='Hi' />
+                <MessageItem message='Yo' />
+                <MessageItem message='Bye' />
             </div>
         </div>
     );
