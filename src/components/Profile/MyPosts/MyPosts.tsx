@@ -1,15 +1,15 @@
-import React from 'react';
+import React, {FC} from 'react';
 import s from './MyPosts.module.css';
-import Post from './Post/Post';
+import Post, {PostType} from './Post/Post';
 
-const MyPosts = () => {
-    const postsData = [
-        {id: 1, message: 'Hi, how are you?', likesCount: 15},
-        {id: 2, message: 'It\'s my first post', likesCount: 23},
-    ]
+type MyPostsDataType = {
+    posts: Array<PostType>
+}
 
-    const postsElements = postsData.length
-        ? postsData.map(p => (<Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount}/>))
+
+const MyPosts: FC<MyPostsDataType> = (props):JSX.Element => {
+    const postsElements = props.posts.length
+        ? props.posts.map(p => (<Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount}/>))
         : <div> Your list is empty</div>
 
     return (

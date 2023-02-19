@@ -1,56 +1,23 @@
 import React, {FC} from 'react';
 import s from './Dialogs.module.css'
-import {NavLink} from 'react-router-dom';
+import {DialogItemType, MessageItemType} from '../../index';
+import DialogItem from './DialogItem/DialogItem';
+import MessageItem from './MessageItem/Message';
 
-
-type DialogItemType = {
-    id: number
-    name: string
+type DialogsDataType = {
+    dialogs: Array<DialogItemType>
+    messages: Array<MessageItemType>
 }
 
-type MessageItemType = {
-    message: string
-    id: number
-}
-const DialogItem: FC<DialogItemType> = (props) => {
-    let path = `/dialogs/${props.id}`
-    return (
-        <div className={s.dialog + ' ' + s.active}>
-            <NavLink to={path}>{props.name}</NavLink>
-        </div>
-    )
-}
-
-const MessageItem: FC<MessageItemType> = (props) => {
-    return (
-        <div className={s.message}>
-            {props.message}
-        </div>
-    )
-}
+const Dialogs: FC<DialogsDataType> = (props): JSX.Element => {
 
 
-const Dialogs = (props: any) => {
-    let dialogsData: Array<DialogItemType> = [
-        {id: 1, name: 'Ivan'},
-        {id: 2, name: 'Nastya'},
-        {id: 3, name: 'Denis'},
-        {id: 4, name: 'Ihor'},
-        {id: 5, name: 'Sveta'},
-        {id: 6, name: 'Petr'},
-    ]
-    let messages: Array<MessageItemType> = [
-        {id: 1, message: 'Hi'},
-        {id: 2, message: 'Yo'},
-        {id: 3, message: 'Bye'},
-    ]
-
-    const dialogs = dialogsData.length
-        ? dialogsData.map(d => (<DialogItem key={d.id} name={d.name} id={d.id} />))
+    const dialogs = props.dialogs.length
+        ? props.dialogs.map(d => (<DialogItem key={d.id} name={d.name} id={d.id} />))
         : <div>Your list is empty</div>
 
-    const messageElements = messages.length
-        ? messages.map(m => (<MessageItem key={m.id} message={m.message} id={m.id} />))
+    const messageElements = props.messages.length
+        ? props.messages.map(m => (<MessageItem key={m.id} message={m.message} id={m.id} />))
         : <div>Your list is empty</div>
 
 
