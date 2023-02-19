@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import s from './../Dialogs.module.css'
-import {MessageItemType} from '../../../index';
+import {MessageItemType} from '../../../Redux/State';
 
 
 const MessageItem: FC<MessageItemType> = (props): JSX.Element => {

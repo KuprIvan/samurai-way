@@ -1,23 +1,23 @@
 import React, {FC} from 'react';
 import s from './Dialogs.module.css'
-import {DialogItemType, MessageItemType} from '../../index';
 import DialogItem from './DialogItem/DialogItem';
 import MessageItem from './MessageItem/Message';
+import {DialogItemType, DialogsPageType, MessageItemType} from '../../Redux/State';
 
 type DialogsDataType = {
-    dialogs: Array<DialogItemType>
-    messages: Array<MessageItemType>
+    state: DialogsPageType
+
 }
 
 const Dialogs: FC<DialogsDataType> = (props): JSX.Element => {
 
 
-    const dialogs = props.dialogs.length
-        ? props.dialogs.map(d => (<DialogItem key={d.id} name={d.name} id={d.id} />))
+    const dialogs = props.state.dialogs.length
+        ? props.state.dialogs.map(d => (<DialogItem key={d.id} name={d.name} id={d.id} />))
         : <div>Your list is empty</div>
 
-    const messageElements = props.messages.length
-        ? props.messages.map(m => (<MessageItem key={m.id} message={m.message} id={m.id} />))
+    const messageElements = props.state.messages.length
+        ? props.state.messages.map(m => (<MessageItem key={m.id} message={m.message} id={m.id} />))
         : <div>Your list is empty</div>
 
 
