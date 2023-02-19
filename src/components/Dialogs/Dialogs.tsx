@@ -31,8 +31,7 @@ const MessageItem: FC<MessageItemType> = (props) => {
 
 
 const Dialogs = (props: any) => {
-
-    const dialogsData = [
+    let dialogsData: Array<DialogItemType> = [
         {id: 1, name: 'Ivan'},
         {id: 2, name: 'Nastya'},
         {id: 3, name: 'Denis'},
@@ -40,23 +39,28 @@ const Dialogs = (props: any) => {
         {id: 5, name: 'Sveta'},
         {id: 6, name: 'Petr'},
     ]
-
-    const messagesData = [
+    let messages: Array<MessageItemType> = [
         {id: 1, message: 'Hi'},
         {id: 2, message: 'Yo'},
         {id: 3, message: 'Bye'},
     ]
+
+    const dialogs = dialogsData.length
+        ? dialogsData.map(d => (<DialogItem key={d.id} name={d.name} id={d.id} />))
+        : <div>Your list is empty</div>
+
+    const messageElements = messages.length
+        ? messages.map(m => (<MessageItem key={m.id} message={m.message} id={m.id} />))
+        : <div>Your list is empty</div>
+
+
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItem}>
-                <DialogItem name={dialogsData[0].name} id={dialogsData[0].id}/>
-                <DialogItem name={dialogsData[1].name} id={dialogsData[1].id}/>
-                <DialogItem name={dialogsData[2].name} id={dialogsData[2].id}/>
+                {dialogs}
             </div>
             <div className={s.messages}>
-                <MessageItem message={messagesData[0].message} id={messagesData[0].id}/>
-                <MessageItem message={messagesData[1].message} id={messagesData[1].id}/>
-                <MessageItem message={messagesData[2].message} id={messagesData[2].id}/>
+                {messageElements}
             </div>
         </div>
     );

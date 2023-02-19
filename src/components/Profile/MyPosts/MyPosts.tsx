@@ -7,6 +7,11 @@ const MyPosts = () => {
         {id: 1, message: 'Hi, how are you?', likesCount: 15},
         {id: 2, message: 'It\'s my first post', likesCount: 23},
     ]
+
+    const postsElements = postsData.length
+        ? postsData.map(p => (<Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount}/>))
+        : <div> Your list is empty</div>
+
     return (
         <div className={s.postBlock}>
             <h3>My posts</h3>
@@ -17,8 +22,7 @@ const MyPosts = () => {
                 <button>Add</button>
             </div>
             <div className={s.posts}>
-                <Post id={postsData[0].id} message={postsData[0].message} likesCount={postsData[0].likesCount}/>
-                <Post id={postsData[1].id} message={postsData[1].message} likesCount={postsData[1].likesCount}/>
+                {postsElements}
             </div>
         </div>
     );
