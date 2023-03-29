@@ -9,6 +9,7 @@ import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import {StateDataType} from './Redux/State';
+import {addPost} from './Redux/State'
 
 type AppDataType = {
     state: StateDataType
@@ -23,7 +24,9 @@ const App: FC<AppDataType> = (props): JSX.Element => {
                 <div className='app-wrapper-content'>
                     <Route path='/profile'
                            render={() => <Profile
-                               state={props.state.profilePage}/>}/>
+                               state={props.state.profilePage}
+                               addPost={addPost}
+                           />}/>
                     <Route path='/dialogs'
                            render={() => <Dialogs
                                state={props.state.messagesPage}/>}/>

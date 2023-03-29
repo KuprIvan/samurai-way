@@ -1,7 +1,9 @@
 import {FC} from 'react';
+import {v1} from "uuid";
+import {rerenderEntireTree} from "../render";
 
 export type PostType = {
-    id: number
+    id: string
     message: string
     likesCount: number
 }
@@ -20,37 +22,16 @@ export type DialogsPageType = {
     dialogs: Array<DialogItemType>
     messages: Array<MessageItemType>
 }
-
-/*
-const postsData: Array<PostType> = [
-    {id: 1, message: 'Hi, how are you?', likesCount: 15},
-    {id: 2, message: 'It\'s my first post', likesCount: 23},
-]
-const dialogsData: Array<DialogItemType> = [
-    {id: 1, name: 'Ivan'},
-    {id: 2, name: 'Nastya'},
-    {id: 3, name: 'Denis'},
-    {id: 4, name: 'Ihor'},
-    {id: 5, name: 'Sveta'},
-    {id: 6, name: 'Petr'},
-]
-const messages: Array<MessageItemType> = [
-    {id: 1, message: 'Hi'},
-    {id: 2, message: 'Yo'},
-    {id: 3, message: 'Bye'},
-]
-*/
-
 export type StateDataType = {
     profilePage: ProfilePageType
-   messagesPage: DialogsPageType
+    messagesPage: DialogsPageType
 }
 
 const state: StateDataType = {
     profilePage: {
         posts: [
-            {id: 1, message: 'Hi, how are you?', likesCount: 15},
-            {id: 2, message: 'It\'s my first post', likesCount: 23},
+            {id: v1(), message: 'Hi, how are you?', likesCount: 15},
+            {id: v1(), message: 'It\'s my first post', likesCount: 23},
         ],
     },
     messagesPage: {
@@ -68,6 +49,12 @@ const state: StateDataType = {
             {id: 3, message: 'Bye'},
         ]
     },
+}
+
+export const addPost = (postMessage: string): void => {
+    const newPost: PostType = {id: v1(), message:  postMessage, likesCount: 0}
+    state.profilePage.posts.push(newPost)
+    rerenderEntireTree(state)
 }
 
 export default state

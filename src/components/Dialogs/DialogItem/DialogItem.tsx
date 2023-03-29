@@ -3,10 +3,6 @@ import s from './../Dialogs.module.css'
 import {NavLink} from 'react-router-dom';
 import {DialogItemType} from '../../../Redux/State';
 
-
-
-
-
 const DialogItem: FC<DialogItemType> = (props):JSX.Element => {
     let path = `/dialogs/${props.id}`
     return (
