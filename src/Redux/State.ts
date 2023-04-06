@@ -1,6 +1,5 @@
 import {FC} from 'react';
 import {v1} from "uuid";
-import {rerenderEntireTree} from "../render";
 
 export type PostType = {
     id: string
@@ -17,6 +16,7 @@ export type MessageItemType = {
 }
 export type ProfilePageType = {
     posts: Array<PostType>
+    newPostTest: string
 }
 export type DialogsPageType = {
     dialogs: Array<DialogItemType>
@@ -27,8 +27,14 @@ export type StateDataType = {
     messagesPage: DialogsPageType
 }
 
-const state: StateDataType = {
+let rerenderEntireTree = (state: StateDataType) => {
+    console.log('State changed')
+}
+
+
+let state: StateDataType = {
     profilePage: {
+        newPostTest: "",
         posts: [
             {id: v1(), message: 'Hi, how are you?', likesCount: 15},
             {id: v1(), message: 'It\'s my first post', likesCount: 23},
@@ -51,10 +57,24 @@ const state: StateDataType = {
     },
 }
 
-export const addPost = (postMessage: string): void => {
-    const newPost: PostType = {id: v1(), message:  postMessage, likesCount: 0}
+export const addPost = (): void => {
+    const newPost: PostType = {
+        id: v1(),
+        message:  state.profilePage.newPostTest,
+        likesCount: 0
+    }
     state.profilePage.posts.push(newPost)
+    state.profilePage.newPostTest = ''
     rerenderEntireTree(state)
 }
 
+export const updateNewPostText = (newText: string) => {
+    state.profilePage.newPostTest = newText
+    rerenderEntireTree(state)
+}
+
+export const subscribe = (observer: any) => {
+    rerenderEntireTree = observer
+
+}
 export default state
