@@ -1,4 +1,3 @@
-import {FC} from 'react';
 import {v1} from "uuid";
 
 export type PostType = {
@@ -27,54 +26,114 @@ export type StateDataType = {
     messagesPage: DialogsPageType
 }
 
-let rerenderEntireTree = (state: StateDataType) => {
-    console.log('State changed')
+export type StoreType = {
+    _state: StateDataType
+    // updateNewPostText: (newText: string) => void
+    // addPost: () => void
+    getState: () => StateDataType
+    _onChange: () => void
+    subscribe: (callback: () => void) => void
+    dispatch: (action: ActionTypes) => void
+
 }
 
+//
+// type ChangeNewTextActionType = {
+//     type: "UPDATE-NEW-POST-TEXT"
+//     payload: {
+//         newText: string
+//     }
+// }
+export type ActionTypes = ReturnType<typeof addPostAC> | ReturnType<typeof onPostChangeAC>
 
-let state: StateDataType = {
-    profilePage: {
-        newPostTest: "",
-        posts: [
-            {id: v1(), message: 'Hi, how are you?', likesCount: 15},
-            {id: v1(), message: 'It\'s my first post', likesCount: 23},
-        ],
-    },
-    messagesPage: {
-        dialogs: [
-            {id: 1, name: 'Ivan'},
-            {id: 2, name: 'Nastya'},
-            {id: 3, name: 'Denis'},
-            {id: 4, name: 'Ihor'},
-            {id: 5, name: 'Sveta'},
-            {id: 6, name: 'Petr'},
-        ],
-        messages: [
-            {id: 1, message: 'Hi'},
-            {id: 2, message: 'Yo'},
-            {id: 3, message: 'Bye'},
-        ]
-    },
-}
+const addPost = 'ADD-POST';
+const updateNewPostText = 'UPDATE-NEW-POST-TEXT';
 
-export const addPost = (): void => {
-    const newPost: PostType = {
-        id: v1(),
-        message:  state.profilePage.newPostTest,
-        likesCount: 0
+export const addPostAC = () => ({ type: addPost }) as const
+export const onPostChangeAC = (newText: string) => ({
+    type: updateNewPostText,
+    payload: {
+        newText: newText
     }
-    state.profilePage.posts.push(newPost)
-    state.profilePage.newPostTest = ''
-    rerenderEntireTree(state)
-}
+}) as const
 
-export const updateNewPostText = (newText: string) => {
-    state.profilePage.newPostTest = newText
-    rerenderEntireTree(state)
-}
 
-export const subscribe = (observer: any) => {
-    rerenderEntireTree = observer
+
+const store: StoreType = {
+    _state: {
+        profilePage: {
+            newPostTest: "",
+            posts: [
+                {id: v1(), message: 'Hi, how are you?', likesCount: 15},
+                {id: v1(), message: 'It\'s my first post', likesCount: 23},
+            ],
+        },
+        messagesPage: {
+            dialogs: [
+                {id: 1, name: 'Ivan'},
+                {id: 2, name: 'Nastya'},
+                {id: 3, name: 'Denis'},
+                {id: 4, name: 'Ihor'},
+                {id: 5, name: 'Sveta'},
+                {id: 6, name: 'Petr'},
+            ],
+            messages: [
+                {id: 1, message: 'Hi'},
+                {id: 2, message: 'Yo'},
+                {id: 3, message: 'Bye'},
+            ]
+        },
+    },
+    _onChange() {
+        console.log('State changed')
+    },
+
+    getState() {
+        return this._state
+    },
+    subscribe(callback) {
+        this._onChange = callback
+    },
+
+    dispatch(action) { // { type: 'ADD-POST', payload: {} }
+        if (action.type === addPost) {
+            const newPost: PostType = {
+                id: v1(),
+                message: this._state.profilePage.newPostTest,
+                likesCount: 0
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostTest = ''
+            this._onChange()
+        } else if (action.type === updateNewPostText) {
+            this._state.profilePage.newPostTest = action.payload.newText
+            this._onChange()
+        }
+    },
+   /* addPost() {
+        const newPost: PostType = {
+            id: v1(),
+            message: this._state.profilePage.newPostTest,
+            likesCount: 0
+        }
+        this._state.profilePage.posts.push(newPost)
+        this._state.profilePage.newPostTest = ''
+        this.onChange()
+    },
+    updateNewPostText(newText: string) {
+        this._state.profilePage.newPostTest = newText
+        this.onChange()
+    },*/
 
 }
-export default state
+//
+// type AddPostActionType = {
+//     type: "ADD-POST"
+// }
+
+
+
+// const res = (window as any).store
+
+export default store
+

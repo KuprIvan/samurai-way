@@ -1,25 +1,32 @@
 import React, {ChangeEvent, FC, useRef} from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
-import {updateNewPostText, PostType} from '../../../Redux/State';
+import {ActionTypes, addPostAC, onPostChangeAC, PostType} from '../../../Redux/State';
 
 type MyPostsDataType = {
     posts: Array<PostType>
     textAreaValue: string
-    addPost: () => void
-    addTextAreaLetter: (letter: string) => void
+    /*addPost: () => void
+    addTextAreaLetter: (letter: string) => void*/
+    dispatch: (action: ActionTypes) => void
 }
+
+
 const MyPosts: FC<MyPostsDataType> = (props): JSX.Element => {
 
     let newPostElement = useRef<HTMLTextAreaElement>(null)
 
     const addPost = (): void => {
-        props.addPost()
+        let action = addPostAC()
+        props.dispatch(action)
+        // props.addPost()
 
     }
 
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.addTextAreaLetter(e.currentTarget.value)
+        let newText = e.currentTarget.value
+        let action = onPostChangeAC(newText)
+        props.dispatch(action)
     }
 
     const postsElements = props.posts.length
