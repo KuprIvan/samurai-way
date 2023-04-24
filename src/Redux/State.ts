@@ -1,4 +1,7 @@
 import {v1} from "uuid";
+import profilePageReducer from "./profilePageReducer";
+import messagePageReducer from "./messagePageReducer";
+import sidebarReducer from "./sidebarReducer";
 
 export type PostType = {
     id: string
@@ -10,7 +13,7 @@ export type DialogItemType = {
     name: string
 }
 export type MessageItemType = {
-    id: number
+    id: string
     message: string
 }
 export type ProfilePageType = {
@@ -20,12 +23,13 @@ export type ProfilePageType = {
 export type DialogsPageType = {
     dialogs: Array<DialogItemType>
     messages: Array<MessageItemType>
+    newMessageBody: string
 }
 export type StateDataType = {
     profilePage: ProfilePageType
     messagesPage: DialogsPageType
+    sidebar: {  }
 }
-
 export type StoreType = {
     _state: StateDataType
     // updateNewPostText: (newText: string) => void
@@ -34,20 +38,14 @@ export type StoreType = {
     _onChange: () => void
     subscribe: (callback: () => void) => void
     dispatch: (action: ActionTypes) => void
-
 }
 
-//
-// type ChangeNewTextActionType = {
-//     type: "UPDATE-NEW-POST-TEXT"
-//     payload: {
-//         newText: string
-//     }
-// }
-export type ActionTypes = ReturnType<typeof addPostAC> | ReturnType<typeof onPostChangeAC>
+export type ActionTypes = ReturnType<typeof addPostAC> | ReturnType<typeof onPostChangeAC> | ReturnType<typeof updateNewMessageBodyAC> | ReturnType<typeof sendNewMessageBodyAC>
 
 const addPost = 'ADD-POST';
 const updateNewPostText = 'UPDATE-NEW-POST-TEXT';
+const updateNewMessageBody = 'UPDATE-NEW-MESSAGE-BODY'
+const sendNewMessageBody = 'SEND-NEW-MESSAGE-BODY'
 
 export const addPostAC = () => ({ type: addPost }) as const
 export const onPostChangeAC = (newText: string) => ({
@@ -56,6 +54,13 @@ export const onPostChangeAC = (newText: string) => ({
         newText: newText
     }
 }) as const
+export const updateNewMessageBodyAC = (newMessageText: string) => ({
+    type: updateNewMessageBody,
+    payload: {
+        newMessageText: newMessageText
+    }
+}) as const
+export const sendNewMessageBodyAC = () => ({ type: sendNewMessageBody }) as const
 
 
 
@@ -78,58 +83,64 @@ const store: StoreType = {
                 {id: 6, name: 'Petr'},
             ],
             messages: [
-                {id: 1, message: 'Hi'},
-                {id: 2, message: 'Yo'},
-                {id: 3, message: 'Bye'},
-            ]
+                {id: v1(), message: 'Hi'},
+                {id: v1(), message: 'Yo'},
+                {id: v1(), message: 'Bye'},
+            ],
+            newMessageBody: '',
         },
+        sidebar: {}
     },
+
     _onChange() {
         console.log('State changed')
     },
-
     getState() {
         return this._state
     },
     subscribe(callback) {
         this._onChange = callback
     },
-
     dispatch(action) { // { type: 'ADD-POST', payload: {} }
-        if (action.type === addPost) {
-            const newPost: PostType = {
-                id: v1(),
-                message: this._state.profilePage.newPostTest,
-                likesCount: 0
-            }
-            this._state.profilePage.posts.push(newPost)
-            this._state.profilePage.newPostTest = ''
-            this._onChange()
-        } else if (action.type === updateNewPostText) {
-            this._state.profilePage.newPostTest = action.payload.newText
-            this._onChange()
-        }
-    },
-   /* addPost() {
-        const newPost: PostType = {
-            id: v1(),
-            message: this._state.profilePage.newPostTest,
-            likesCount: 0
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostTest = ''
-        this.onChange()
-    },
-    updateNewPostText(newText: string) {
-        this._state.profilePage.newPostTest = newText
-        this.onChange()
-    },*/
+        this._state.profilePage = profilePageReducer(this._state.profilePage, action);
+        this._state.messagesPage = messagePageReducer(this._state.messagesPage, action);
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action)
+        this._onChange()
 
+        // switch (action.type) {
+        //     case addPost:
+        //         const newPost: PostType = {
+        //             id: v1(),
+        //             message: this._state.profilePage.newPostTest,
+        //             likesCount: 0
+        //         }
+        //         this._state.profilePage.posts.push(newPost)
+        //         this._state.profilePage.newPostTest = ''
+        //         this._onChange()
+        //     break;
+        //     case updateNewPostText:
+        //         this._state.profilePage.newPostTest = action.payload.newText
+        //         this._onChange()
+        //         break;
+        //     case updateNewMessageBody:
+        //         this._state.messagesPage.newMessageBody = action.payload.newMessageText
+        //         this._onChange()
+        //         break;
+        //     case sendNewMessageBody:
+        //         let body = this._state.messagesPage.newMessageBody
+        //         const newMessage: MessageItemType= {
+        //             id: v1(),
+        //             message: body
+        //         }
+        //         this._state.messagesPage.messages.push(newMessage)
+        //         this._state.messagesPage.newMessageBody = ''
+        //         this._onChange()
+        //         break;
+        //
+        // }
+    },
 }
-//
-// type AddPostActionType = {
-//     type: "ADD-POST"
-// }
+
 
 
 

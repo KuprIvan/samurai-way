@@ -11,7 +11,7 @@ import Settings from './components/Settings/Settings';
 import {ActionTypes, StoreType} from "./Redux/State";
 
 
-type PropsType = {
+type PropsType =  {
     store: StoreType
     dispatch: (action: ActionTypes) => void
    /* addPost: () => void
@@ -35,7 +35,7 @@ const App: FC<PropsType> = (props) => {
                                addTextAreaLetter={props.store.updateNewPostText.bind(props.store)}*/
                            />}/>
                     <Route path='/dialogs'
-                           render={() => <Dialogs state={state.messagesPage}/>}/>
+                           render={() => <Dialogs state={state.messagesPage} dispatch={props.store.dispatch.bind(props.store)} />}/>
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/music' render={() => <Music/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>
