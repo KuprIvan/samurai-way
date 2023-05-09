@@ -2,7 +2,8 @@ import React, {FC, useRef} from 'react';
 import s from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem';
 import MessageItem from './MessageItem/Message';
-import {ActionTypes, DialogsPageType, sendNewMessageBodyAC, updateNewMessageBodyAC} from '../../Redux/State';
+import {ActionTypes, DialogsPageType} from '../../Redux/state';
+import {sendNewMessageBodyAC, updateNewMessageBodyAC} from "../../Redux/messagePageReducer";
 
 type DialogsDataType = {
     state: DialogsPageType

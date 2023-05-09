@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
-import {ActionTypes, ProfilePageType} from '../../Redux/State';
+import {ActionTypes, ProfilePageType} from '../../Redux/state';
 
 type ProfileType = {
     profilePage: ProfilePageType
@@ -16,7 +16,7 @@ const Profile: FC<ProfileType> = (props): JSX.Element => {
             <ProfileInfo/>
             <MyPosts
                 posts={props.profilePage.posts}
-                textAreaValue={props.profilePage.newPostTest}
+                textAreaValue={props.profilePage.newPostText}
                 dispatch={props.dispatch}
                /* addPost={props.addPost}
                 addTextAreaLetter={props.addTextAreaLetter}*/
