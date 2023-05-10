@@ -1,10 +1,6 @@
 import {v1} from "uuid";
-import profilePageReducer, {addPostAC, onPostChangeAC, ProfileReducerActionTypes} from "./profilePageReducer";
-import messagePageReducer, {
-    MessageReducerActionTypes,
-    sendNewMessageBodyAC,
-    updateNewMessageBodyAC
-} from "./messagePageReducer";
+import profilePageReducer, {ProfileReducerActionTypes} from "./profilePageReducer";
+import messagePageReducer, {MessageReducerActionTypes} from "./messagePageReducer";
 import sidebarReducer from "./sidebarReducer";
 
 export type PostType = {
@@ -37,14 +33,13 @@ export type StateDataType = {
 export type StoreType = {
     _state: StateDataType
     getState: () => StateDataType
-    _onChange: () => void
+    _callSubscriber: (state: any) => void
     subscribe: (callback: () => void) => void
     dispatch: (action: ActionTypes) => void
 }
+export type ActionTypes = ProfileReducerActionTypes | MessageReducerActionTypes
 
-export type ActionTypes = ProfileReducerActionTypes & MessageReducerActionTypes
-
-const store: StoreType = {
+/*const store: StoreType = {
     _state: {
         profilePage: {
             newPostText: "",
@@ -71,24 +66,23 @@ const store: StoreType = {
         },
         sidebar: {}
     },
-    _onChange() {
+    _callSubscriber(state: any) {
         console.log('State changed')
     },
     getState() {
         return this._state
     },
     subscribe(callback) {
-        this._onChange = callback
+        this._callSubscriber = callback
     },
     dispatch(action) { // { type: 'ADD-POST', payload: {} }
         this._state.profilePage = profilePageReducer(this._state.profilePage, action);
         this._state.messagesPage = messagePageReducer(this._state.messagesPage, action);
         this._state.sidebar = sidebarReducer(this._state.sidebar, action)
-        this._onChange()
+        this._callSubscriber(this._state)
     },
-}
+}*/
 
-// const res = (window as any).store
 
-export default store
+// export default store
 
