@@ -1,6 +1,27 @@
-import {createStore} from "redux";
+import {combineReducers, createStore, Store} from "redux";
+import profilePageReducer from "./profilePageReducer";
+import messagePageReducer from "./messagePageReducer";
+import {ActionTypes} from "./store";
 
-let store = createStore
+/*export type StoreType = {
+    _state: StateDataType
+    getState: () => StateDataType
+    _callSubscriber: (state: any) => void
+    subscribe: (callback: () => void) => void
+    dispatch: (action: ActionTypes) => void
+}*/
+
+export type RootStore = Store<AppReduxStateType, ActionTypes>
+
+export type AppReduxStateType = ReturnType<typeof reducers>
+export const reducers = combineReducers({
+    profilePage: profilePageReducer,
+    messagesPage: messagePageReducer,
+    // sidebar: sidebarReducer
+});
 
 
-export default store
+const store:RootStore = createStore(reducers);
+
+
+export default store;
