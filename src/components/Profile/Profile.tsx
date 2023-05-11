@@ -1,26 +1,19 @@
 import React, {FC} from 'react';
 import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
-import {ActionTypes, ProfilePageType} from '../../Redux/store';
+import {ActionTypes, ProfilePageType, StoreType} from '../../Redux/store';
+import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import {RootStore} from "../../Redux/redux-store";
 
 type ProfileType = {
-    profilePage: ProfilePageType
-   /* addPost: () => void
-    addTextAreaLetter: (letter: string) => void*/
-    dispatch: (action: ActionTypes) => void
+    store: RootStore
 }
 
 const Profile: FC<ProfileType> = (props): JSX.Element => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts
-                posts={props.profilePage.posts}
-                textAreaValue={props.profilePage.newPostText}
-                dispatch={props.dispatch}
-               /* addPost={props.addPost}
-                addTextAreaLetter={props.addTextAreaLetter}*/
-            />
+            <MyPostsContainer store={props.store} />
         </div>
     );
 };
