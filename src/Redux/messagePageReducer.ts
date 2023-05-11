@@ -23,7 +23,7 @@ let initialState: DialogsPageType = {
     newMessageBody: '',
 }
 
-const messagePageReducer = (state = initialState, action: MessageReducerActionTypes) => {
+const dialogsPageReducer = (state = initialState, action: MessageReducerActionTypes) => {
     switch (action.type) {
         case updateNewMessageBody:
             state.newMessageBody = action.payload.newMessageText;
@@ -54,4 +54,4 @@ export const updateNewMessageBodyAC = (newMessageText: string) => ({
 export const sendNewMessageBodyAC = () => ({type: sendNewMessageBody}) as const
 
 
-export default messagePageReducer;
+export default dialogsPageReducer;

@@ -1,24 +1,39 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {addPostAC, onPostChangeAC} from "../../../Redux/profilePageReducer";
 import MyPosts from "./MyPosts";
-import {RootStore} from "../../../Redux/redux-store";
+import StoreContext from "../../../StoreContext";
 
-type MyPostsDataType = {
-    store: RootStore
-}
+// type MyPostsDataType = {
+//     store: RootStore
+// }
 
-const MyPostsContainer: FC<MyPostsDataType> = (props): JSX.Element => {
-    let state = props.store.getState()
-    const addPost = (): void => {
-        props.store.dispatch(addPostAC());
+const MyPostsContainer = (): JSX.Element => {
+    return (
+        <StoreContext.Consumer>
+            {
+                (store) => {
 
-    }
-    const onPostChange = (newText: string) => {
-        let action = onPostChangeAC(newText)
-        props.store.dispatch(action);
-    }
+                    const addPost = (): void => {
+                        store?.dispatch(addPostAC());
 
-    return (<MyPosts updateNewPostText={ onPostChange } addPost={ addPost } posts={state.profilePage.posts} newPostText={state.profilePage.newPostText}/>);
+                    }
+                    const onPostChange = (newText: string) => {
+                        let action = onPostChangeAC(newText)
+                        store?.dispatch(action);
+                    }
+
+                    if (!store) return
+                    let state = store.getState();
+
+                    return <MyPosts updateNewPostText={onPostChange}
+                                    addPost={addPost}
+                                    posts={state?.profilePage.posts}
+                                    newPostText={state?.profilePage.newPostText}/>;
+                }
+            }
+
+        </StoreContext.Consumer>
+    )
 };
 
 export default MyPostsContainer;

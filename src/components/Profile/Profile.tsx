@@ -1,19 +1,16 @@
-import React, {FC} from 'react';
-import MyPosts from './MyPosts/MyPosts';
+import React from 'react';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
-import {ActionTypes, ProfilePageType, StoreType} from '../../Redux/store';
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import {RootStore} from "../../Redux/redux-store";
 
-type ProfileType = {
-    store: RootStore
-}
+// type ProfileType = {
+//     store: RootStore
+// }
 
-const Profile: FC<ProfileType> = (props): JSX.Element => {
+const Profile = (): JSX.Element => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPostsContainer store={props.store} />
+            <MyPostsContainer />
         </div>
     );
 };

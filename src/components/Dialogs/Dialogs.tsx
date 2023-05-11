@@ -1,7 +1,7 @@
 import React, {ChangeEvent, FC, useRef} from 'react';
 import s from './Dialogs.module.css'
 import {RootStore} from "../../Redux/redux-store";
-import {DialogItemType, DialogsPageType} from "../../Redux/store";
+import {DialogsPageType} from "../../Redux/store";
 import DialogItem from "./DialogItem/DialogItem";
 import MessageItem from "./MessageItem/Message";
 
@@ -9,11 +9,11 @@ type DialogsDataType = {
     store: RootStore
     updateMessage: (body: string) => void
     sendMessage: () => void
-    messagePage: DialogsPageType
+    dialogsPage: DialogsPageType
 }
 
 const Dialogs: FC<DialogsDataType> = (props): JSX.Element => {
-    let state = props.messagePage;
+    let state = props.dialogsPage;
 
     const dialogs = state.dialogs.length
         ? state.dialogs.map(d => (<DialogItem key={d.id} name={d.name} id={d.id} />))
