@@ -1,38 +1,39 @@
-import React, {FC, useRef} from 'react';
+import React, {ChangeEvent, FC, useRef} from 'react';
 import s from './Dialogs.module.css'
-import DialogItem from './DialogItem/DialogItem';
-import MessageItem from './MessageItem/Message';
-import {ActionTypes, DialogsPageType} from '../../Redux/store';
-import {sendNewMessageBodyAC, updateNewMessageBodyAC} from "../../Redux/messagePageReducer";
+import {RootStore} from "../../Redux/redux-store";
+import {DialogItemType, DialogsPageType} from "../../Redux/store";
+import DialogItem from "./DialogItem/DialogItem";
+import MessageItem from "./MessageItem/Message";
 
 type DialogsDataType = {
-    state: DialogsPageType
-    dispatch: (action: ActionTypes) => void
+    store: RootStore
+    updateMessage: (body: string) => void
+    sendMessage: () => void
+    messagePage: DialogsPageType
 }
 
 const Dialogs: FC<DialogsDataType> = (props): JSX.Element => {
+    let state = props.messagePage;
 
-    const dialogs = props.state.dialogs.length
-        ? props.state.dialogs.map(d => (<DialogItem key={d.id} name={d.name} id={d.id} />))
+    const dialogs = state.dialogs.length
+        ? state.dialogs.map(d => (<DialogItem key={d.id} name={d.name} id={d.id} />))
         : <div>Your list is empty</div>
 
-    const messageElements = props.state.messages.length
-        ? props.state.messages.map(m => (<MessageItem key={m.id} message={m.message} id={m.id} />))
+    const messageElements = state.messages.length
+        ? state.messages.map(m => (<MessageItem key={m.id} message={m.message} id={m.id} />))
         : <div>Your list is empty</div>
 
-    let newMessageBody = props.state.newMessageBody
+    let newMessageBody = state.newMessageBody
 
     let newPostElement = useRef<HTMLTextAreaElement>(null)
 
-    const OnAddNewMessageBody = () => {
-        let text = newPostElement.current?.value as string
-        let action = updateNewMessageBodyAC(text)
-        props.dispatch(action)
+    const onNewMessageChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
+        let body = e.target.value;
+        props.updateMessage(body)
     }
 
-    const OnSendNewMessageBody = () => {
-        let action = sendNewMessageBodyAC()
-        props.dispatch(action)
+    const onSendMessageClick = () => {
+        props.sendMessage()
     }
 
     return (
@@ -45,14 +46,14 @@ const Dialogs: FC<DialogsDataType> = (props): JSX.Element => {
                 <div>
                     <div>
                         <textarea value={ newMessageBody }
-                                  ref={newPostElement}
+                                  ref={ newPostElement}
                                   placeholder='Enter your message'
-                                  onChange={ OnAddNewMessageBody  }
+                                  onChange={ onNewMessageChange  }
                         >
                         </textarea>
                     </div>
                     <div>
-                        <button onClick={ OnSendNewMessageBody }>Add</button>
+                        <button onClick={ onSendMessageClick }>Add</button>
                     </div>
                 </div>
             </div>

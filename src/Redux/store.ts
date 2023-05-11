@@ -1,7 +1,5 @@
-import {v1} from "uuid";
-import profilePageReducer, {ProfileReducerActionTypes} from "./profilePageReducer";
-import messagePageReducer, {MessageReducerActionTypes} from "./messagePageReducer";
-import sidebarReducer from "./sidebarReducer";
+import {ProfileReducerActionTypes} from "./profilePageReducer";
+import {MessageReducerActionTypes} from "./messagePageReducer";
 
 export type PostType = {
     id: string

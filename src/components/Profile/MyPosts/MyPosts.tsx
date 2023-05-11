@@ -1,34 +1,25 @@
 import React, {ChangeEvent, FC, useRef} from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
-import {ActionTypes, PostType} from '../../../Redux/store';
-import {addPostAC, onPostChangeAC} from "../../../Redux/profilePageReducer";
-
+import {PostType} from '../../../Redux/store';
 
 type MyPostsDataType = {
     posts: Array<PostType>
-    textAreaValue: string
-    /*addPost: () => void
-    addTextAreaLetter: (letter: string) => void*/
-    dispatch: (action: ActionTypes) => void
+    newPostText: string
+    updateNewPostText: (nexText: string) => void
+    addPost: () => void
 }
 
-
 const MyPosts: FC<MyPostsDataType> = (props): JSX.Element => {
-
     let newPostElement = useRef<HTMLTextAreaElement>(null)
 
-    const addPost = (): void => {
-        let action = addPostAC()
-        props.dispatch(action)
-        // props.addPost()
-
+    const onAddPost = (): void => {
+        props.addPost()
     }
 
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let newText = e.currentTarget.value
-        let action = onPostChangeAC(newText)
-        props.dispatch(action)
+        let newText = e.currentTarget.value;
+        props.updateNewPostText(newText)
     }
 
     const postsElements = props.posts.length
@@ -46,11 +37,11 @@ const MyPosts: FC<MyPostsDataType> = (props): JSX.Element => {
             <div>
                 <textarea
                     ref={newPostElement}
-                    value={props.textAreaValue}
+                    value={props.newPostText}
                     onChange={onPostChange}/>
             </div>
             <div>
-                <button onClick={addPost}>Add</button>
+                <button onClick={onAddPost}>Add</button>
             </div>
             <div className={s.posts}>
                 {postsElements}
