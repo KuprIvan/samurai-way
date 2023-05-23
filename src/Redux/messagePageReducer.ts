@@ -1,12 +1,28 @@
 import {v1} from "uuid";
-import {DialogsPageType, MessageItemType} from "./store";
+
+export type DialogItemType = {
+    id: number
+    name: string
+}
+export type MessageItemType = {
+    id: string
+    message: string
+}
+
+type DialogsPageType = {
+    dialogs: Array<DialogItemType>
+    messages: Array<MessageItemType>
+    newMessageBody: string
+}
 
 const updateNewMessageBody = 'UPDATE-NEW-MESSAGE-BODY'
 const sendNewMessageBody = 'SEND-NEW-MESSAGE-BODY'
 
 export type MessageReducerActionTypes = ReturnType<typeof updateNewMessageBodyAC> | ReturnType<typeof sendNewMessageBodyAC>
 
-let initialState: DialogsPageType = {
+export type InitialStateType = typeof initialState
+
+let initialState = {
     dialogs: [
         {id: 1, name: 'Ivan'},
         {id: 2, name: 'Nastya'},
@@ -14,16 +30,16 @@ let initialState: DialogsPageType = {
         {id: 4, name: 'Ihor'},
         {id: 5, name: 'Sveta'},
         {id: 6, name: 'Petr'},
-    ],
+    ] as Array<DialogItemType>,
     messages: [
         {id: v1(), message: 'Hi'},
         {id: v1(), message: 'Yo'},
         {id: v1(), message: 'Bye'},
-    ],
+    ] as Array<MessageItemType>,
     newMessageBody: '',
 }
 
-const dialogsPageReducer = (state = initialState, action: MessageReducerActionTypes) => {
+const dialogsPageReducer = (state: InitialStateType = initialState, action: MessageReducerActionTypes): InitialStateType => {
     switch (action.type) {
         case updateNewMessageBody:
             state.newMessageBody = action.payload.newMessageText;

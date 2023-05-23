@@ -1,6 +1,10 @@
 import {v1} from "uuid";
-import {PostType, ProfilePageType} from "./store";
-import {RootStore} from "./redux-store";
+import {PostType} from "../components/Profile/MyPosts/MyPosts";
+
+type ProfilePageType = {
+    posts: Array<PostType>
+    newPostText: string
+}
 
 const addPost = 'ADD-POST';
 const updateNewPostText = 'UPDATE-NEW-POST-TEXT';

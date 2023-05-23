@@ -1,16 +1,17 @@
 import React, {ChangeEvent, FC, useRef} from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
-import {PostType} from '../../../Redux/store';
+import {MyPostsPropsType} from "./MyPostsContainer";
 
-type MyPostsDataType = {
-    posts: Array<PostType>
-    newPostText: string
-    updateNewPostText: (nexText: string) => void
-    addPost: () => void
+
+export type PostType = {
+    id: string
+    message: string
+    likesCount: number
 }
 
-const MyPosts: FC<MyPostsDataType> = (props): JSX.Element => {
+
+const MyPosts = (props: MyPostsPropsType) => {
     let newPostElement = useRef<HTMLTextAreaElement>(null)
 
     const onAddPost = (): void => {

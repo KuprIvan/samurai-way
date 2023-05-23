@@ -18,7 +18,7 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 // const App: FC<PropsType> = (props) => {
 const App = (): JSX.Element => {
-    // TODO Ask mentor do we need to type this func if we dont have any props.
+
     return (
         <BrowserRouter>
             <div className="app-wrapper">

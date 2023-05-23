@@ -1,18 +1,20 @@
 import React, {ChangeEvent, FC, useRef} from 'react';
 import s from './Dialogs.module.css'
 import {RootStore} from "../../Redux/redux-store";
-import {DialogsPageType} from "../../Redux/store";
 import DialogItem from "./DialogItem/DialogItem";
 import MessageItem from "./MessageItem/Message";
+import {DialogItemType, MessageItemType} from "../../Redux/store";
+import {DialogsPropsType} from "./DialogsContainer";
 
-type DialogsDataType = {
-    store: RootStore
-    updateMessage: (body: string) => void
-    sendMessage: () => void
-    dialogsPage: DialogsPageType
+
+export type DialogsPageType = {
+    dialogs: Array<DialogItemType>
+    messages: Array<MessageItemType>
+    newMessageBody: string
 }
 
-const Dialogs: FC<DialogsDataType> = (props): JSX.Element => {
+
+const Dialogs = (props: DialogsPropsType): JSX.Element => {
     let state = props.dialogsPage;
 
     const dialogs = state.dialogs.length
@@ -27,13 +29,14 @@ const Dialogs: FC<DialogsDataType> = (props): JSX.Element => {
 
     let newPostElement = useRef<HTMLTextAreaElement>(null)
 
+    const onSendMessageClick = () => {
+        props.sendMessage()
+    }
+
     const onNewMessageChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
         let body = e.target.value;
         props.updateMessage(body)
-    }
 
-    const onSendMessageClick = () => {
-        props.sendMessage()
     }
 
     return (
