@@ -1,4 +1,14 @@
-.descriptionInfo {
+
+.content img {
+    width: 100%;
+}
+.posts {
+
+}
+.item {
+    color: aqua;
+}
+.messagesBlock {
     padding: 10px;
-    font-size: 2rem;
+    font-size: 20px;
 }

@@ -10,30 +10,64 @@ import Settings from './components/Settings/Settings';
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 
-// type PropsType =  {
-//     store: RootStore
-//     dispatch: (action: ActionTypes) => void
-//     state: AppReduxStateType
-// }
-
 // const App: FC<PropsType> = (props) => {
 const App = (): JSX.Element => {
 
+export type MessageDataType = {
+    id: string
+    name: string
+}
+
+export type DialogDataType = {
+    id: string
+    name: string
+}
+
+export type PostsDataType = {
+    id: string
+    message: string
+    likesCount: number
+}
+
+const postsData: PostsDataType[] = [
+    {id: "1", message: "Hi, how are you?", likesCount: 15},
+    {id: "2", message: "It's my first post", likesCount: 25}
+]
+
+
+const DialogData: DialogDataType[] = [
+    {id: "1", name: "Ivan"},
+    {id: "2", name: "Nastya"},
+    {id: "3", name: "Denis"},
+    {id: "4", name: "Ihor"},
+    {id: "5", name: "Sveta"},
+]
+const MessageData: MessageDataType[] = [
+    {id: "1", name: "Ivan"},
+    {id: "2", name: "Nastya"},
+    {id: "3", name: "Denis"},
+    {id: "4", name: "Ihor"},
+    {id: "5", name: "Sveta"},
+]
+
+const App = () => {=======
     return (
         <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
-                    <Route path='/dialogs'
-                           render={() => <DialogsContainer />}/>
-
-                    <Route path='/profile'
-                           render={() => <Profile />}/>
-
-                    <Route path='/news' render={() => <News/>}/>
-                    <Route path='/music' render={() => <Music/>}/>
-                    <Route path='/settings' render={() => <Settings/>}/>
+                    <Route path='/profile' render={() => <Profile
+                        posts={postsData}
+                    />}
+                    />
+                    <Route path='/dialogs' render={() => <Dialogs
+                        dialogs={DialogData}
+                        messages={MessageData}/>}
+                    />
+                    <Route path='/news' render={News}/>
+                    <Route path='/music' render={Music}/>
+                    <Route path='/settings' render={Settings}/>
                 </div>
             </div>
         </BrowserRouter>

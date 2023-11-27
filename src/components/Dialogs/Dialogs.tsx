@@ -1,67 +1,32 @@
 import React, {ChangeEvent, FC, useRef} from 'react';
 import s from './Dialogs.module.css'
-import {RootStore} from "../../Redux/redux-store";
-import DialogItem from "./DialogItem/DialogItem";
-import MessageItem from "./MessageItem/Message";
-import {DialogItemType, MessageItemType} from "../../Redux/store";
-import {DialogsPropsType} from "./DialogsContainer";
+import {DialogItem} from "./DialogsItem/DialogsItem";
+import {MessageItem} from "./Message/MessageItem";
+import {DialogDataType, MessageDataType} from "../../App";
 
 
-export type DialogsPageType = {
-    dialogs: Array<DialogItemType>
-    messages: Array<MessageItemType>
-    newMessageBody: string
+type DialogsPropType = {
+    dialogs: DialogDataType[]
+    messages: MessageDataType[]
 }
 
+const Dialogs: FC<DialogsPropType> = ({dialogs, messages}) => {
+    const dialogsElements = dialogs
+        .map(d => <DialogItem key={d.id} id={d.id} name={d.name}/>)
+    const messagesElements = messages
+        .map(m => <MessageItem key={m.id} message={m.name}></MessageItem>)
 
-const Dialogs = (props: DialogsPropsType): JSX.Element => {
-    let state = props.dialogsPage;
-
-    const dialogs = state.dialogs.length
-        ? state.dialogs.map(d => (<DialogItem key={d.id} name={d.name} id={d.id} />))
-        : <div>Your list is empty</div>
-
-    const messageElements = state.messages.length
-        ? state.messages.map(m => (<MessageItem key={m.id} message={m.message} id={m.id} />))
-        : <div>Your list is empty</div>
-
-    let newMessageBody = state.newMessageBody
-
-    let newPostElement = useRef<HTMLTextAreaElement>(null)
-
-    const onSendMessageClick = () => {
-        props.sendMessage()
-    }
-
-    const onNewMessageChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
-        let body = e.target.value;
-        props.updateMessage(body)
-
-    }
-
-    return (
+    return <>
         <div className={s.dialogs}>
             <div className={s.dialogsItem}>
-                {dialogs}
+                {dialogsElements}
             </div>
             <div className={s.messages}>
-                <div>{messageElements}</div>
-                <div>
-                    <div>
-                        <textarea value={ newMessageBody }
-                                  ref={ newPostElement}
-                                  placeholder='Enter your message'
-                                  onChange={ onNewMessageChange  }
-                        >
-                        </textarea>
-                    </div>
-                    <div>
-                        <button onClick={ onSendMessageClick }>Add</button>
-                    </div>
-                </div>
+                {messagesElements}
+
             </div>
         </div>
-    );
+    </>
 };
 
 export default Dialogs;
