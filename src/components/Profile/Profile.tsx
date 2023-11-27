@@ -1,15 +1,18 @@
-import React from 'react';
-import s from './Profile.module.css';
+import React, {FC} from 'react';
 import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
+import {PostsDataType} from "../../App";
+
+type ProfilePropsType = {
+    posts: PostsDataType[]
+}
 
 
-
-const Profile = () => {
+const Profile: FC<ProfilePropsType> = ({posts}) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts/>
+            <MyPosts posts={posts}/>
         </div>
     );
 };

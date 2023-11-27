@@ -1,20 +1,15 @@
-import React from 'react';
+import React, {FC} from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
+import {PostsDataType} from "../../../App";
 
-
-type PostsDataType = {
-    id: string
-    message: string
-    likesCount: number
+type MyPostsType = {
+    posts: PostsDataType[]
 }
 
-const postsData: PostsDataType[] = [
-    {id: "1", message: "Hi, how are you?", likesCount: 15},
-    {id: "2", message: "It's my first post", likesCount: 25}]
 
-const MyPosts = () => {
-    const posts = postsData.map( p => <Post key={p.id} message={p.message} likesCount={p.likesCount} />)
+const MyPosts: FC<MyPostsType> = (props) => {
+    const posts = props.posts.map( p => <Post key={p.id} message={p.message} likesCount={p.likesCount} />)
 
     return (
         <div className={s.postsBlock}>
