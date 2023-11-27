@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {ChangeEvent, FC, useRef} from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from "./DialogsItem/DialogsItem";
 import {MessageItem} from "./Message/MessageItem";
@@ -23,6 +23,7 @@ const Dialogs: FC<DialogsPropType> = ({dialogs, messages}) => {
             </div>
             <div className={s.messages}>
                 {messagesElements}
+
             </div>
         </div>
     </>

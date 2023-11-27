@@ -3,11 +3,15 @@ import './App.css';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './components/Profile/Profile';
-import Dialogs from './components/Dialogs/Dialogs';
 import {BrowserRouter, Route} from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
+
+
+// const App: FC<PropsType> = (props) => {
+const App = (): JSX.Element => {
 
 export type MessageDataType = {
     id: string
@@ -46,7 +50,7 @@ const MessageData: MessageDataType[] = [
     {id: "5", name: "Sveta"},
 ]
 
-const App = () => {
+const App = () => {=======
     return (
         <BrowserRouter>
             <div className="app-wrapper">
@@ -69,5 +73,7 @@ const App = () => {
         </BrowserRouter>
     );
 }
+
+
 
 export default App;
