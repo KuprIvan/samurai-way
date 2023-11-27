@@ -11,6 +11,17 @@ type DialogItemType = {
 type MessageItemType = {
     message: string
 }
+
+type DialogDataType = {
+    id: string
+    name: string
+}
+type MessageDataType = {
+    id: string
+    name: string
+}
+
+
 const DialogItem: FC<DialogItemType> = (props) => {
     let path = `/dialogs/${props.id}`;
 
@@ -31,19 +42,32 @@ const MessageItem: FC<MessageItemType> = (props) => {
 
 const Dialogs = () => {
 
+    const DialogData: DialogDataType[] = [
+        {id: "1", name: "Ivan"},
+        {id: "2", name: "Nastya"},
+        {id: "3", name: "Denis"},
+        {id: "4", name: "Ihor"},
+        {id: "5", name: "Sveta"},
+    ]
+
+    const dialogs = DialogData.map( d => <DialogItem key={d.id} id={d.id} name={d.name} />)
+
+    const MessageData: MessageDataType[] = [
+        {id: "1", name: "Ivan"},
+        {id: "2", name: "Nastya"},
+        {id: "3", name: "Denis"},
+        {id: "4", name: "Ihor"},
+        {id: "5", name: "Sveta"},
+    ]
+    const messages = MessageData.map( m => <MessageItem key={m.id} message={m.name}></MessageItem>)
+
     return <>
         <div className={s.dialogs}>
             <div className={s.dialogsItem}>
-                <DialogItem name='Ivan' id='1'/>
-                <DialogItem name='Nastya' id='2'/>
-                <DialogItem name='Denis' id='3'/>
-                <DialogItem name='Ihor' id='4'/>
-                <DialogItem name='Sveta' id='5'/>
+                {dialogs}
             </div>
             <div className={s.messages}>
-                <MessageItem message='Hi'/>
-                <MessageItem message='Yo'/>
-                <MessageItem message='Bye'/>
+                {messages}
             </div>
         </div>
     </>
