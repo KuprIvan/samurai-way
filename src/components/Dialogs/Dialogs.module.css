@@ -18,3 +18,7 @@
 .message {
     font-size: 2rem;
 }
+
+.active {
+    color: gold;
+}

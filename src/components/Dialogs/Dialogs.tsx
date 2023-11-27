@@ -9,10 +9,11 @@ type DialogItemType = {
 }
 
 type MessageItemType = {
-    title: string
+    message: string
 }
 const DialogItem: FC<DialogItemType> = (props) => {
-    let path = `/dialogs/${props.id}`
+    let path = `/dialogs/${props.id}`;
+
     return (
         <div className={s.dialog + ' ' + s.active}>
             <NavLink to={path}>{props.name}</NavLink>
@@ -20,18 +21,17 @@ const DialogItem: FC<DialogItemType> = (props) => {
     )
 }
 
-const MessageItem: FC<MessageItemType> = (props)  => {
-  return (
-      <div className={s.message}>
-          {props.title}
-      </div>
-  )
+const MessageItem: FC<MessageItemType> = (props) => {
+    return (
+        <div className={s.message}>
+            {props.message}
+        </div>
+    )
 }
 
+const Dialogs = () => {
 
-
-const Dialogs = (props: any) => {
-    return (
+    return <>
         <div className={s.dialogs}>
             <div className={s.dialogsItem}>
                 <DialogItem name='Ivan' id='1'/>
@@ -41,12 +41,12 @@ const Dialogs = (props: any) => {
                 <DialogItem name='Sveta' id='5'/>
             </div>
             <div className={s.messages}>
-                <MessageItem title='Hi' />
-                <MessageItem title='Yo' />
-                <MessageItem title='Bye' />
+                <MessageItem message='Hi'/>
+                <MessageItem message='Yo'/>
+                <MessageItem message='Bye'/>
             </div>
         </div>
-    );
+    </>
 };
 
 export default Dialogs;
