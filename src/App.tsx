@@ -14,6 +14,7 @@ import SideBarMenu from "./components/SideBar/SideBar";
 
 type AppDataType = {
     state: StateDataType
+    addPost: (postMessage: string) => void
 }
 
 
@@ -25,7 +26,9 @@ const App: FC<AppDataType> = (props) => {
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Route path='/profile'
-                           render={() => <Profile state={props.state.profilePage}
+                           render={() => <Profile
+                               state={props.state.profilePage}
+                               addPost={props.addPost}
                            />}
                     />
                     <Route path='/dialogs' render={() => <Dialogs state={props.state.dialogsPage}/>}

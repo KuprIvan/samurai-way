@@ -1,3 +1,5 @@
+import {v1} from "uuid";
+
 export type MessageDataType = {
     id: string
     name: string
@@ -72,4 +74,17 @@ const state: StateDataType = {
         ]
     }
 }
+
+
+export let addPost = (postMessage: string) => {
+    const newMessage: PostsDataType = {
+        id: v1(),
+        message: postMessage,
+        likesCount: 1
+    }
+    let copyState = {...state}
+    return copyState.profilePage.posts.push(newMessage)
+}
+
+
 export default state;

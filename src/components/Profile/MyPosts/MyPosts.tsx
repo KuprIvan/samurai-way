@@ -5,6 +5,7 @@ import {PostsDataType} from "../../../redux/state";
 
 type MyPostsType = {
     posts: PostsDataType[]
+    addPost: (postMessage: string) => void
 }
 
 
@@ -14,7 +15,10 @@ const MyPosts: FC<MyPostsType> = (props) => {
 
     const onAddBtnClickHandler = () => {
         const newPostText = newPostTest.current?.value;
-        alert(newPostText)
+
+        if (typeof newPostText === "string") {
+            props.addPost(newPostText);
+        }
     }
 
     return (
