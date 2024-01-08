@@ -28,6 +28,7 @@ export type PostsDataType = {
 
 export type ProfilePageType = {
     posts: PostsDataType[]
+    newPostText: string
 }
 
 export type DialogsPageType = {
@@ -63,7 +64,8 @@ const state: StateDataType = {
         posts: [
             {id: "1", message: "Hi, how are you?", likesCount: 15},
             {id: "2", message: "It's my first post", likesCount: 25}
-        ]
+        ],
+        newPostText: ''
     },
     sideBarMenu: {
         friends: [
@@ -84,9 +86,15 @@ export let addPost = (postMessage: string) => {
         likesCount: 1
     }
     let copyState = {...state}
-    rerenderEntireTree(state)
+    rerenderEntireTree(state);
+    state.profilePage.newPostText = '';
     return copyState.profilePage.posts.push(newMessage)
 }
 
+export let updateNewPostText = (newText: string) => {
+    state.profilePage.newPostText = newText;
+    rerenderEntireTree(state);
+}
+window.state = state;
 
 export default state;

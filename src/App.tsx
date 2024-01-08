@@ -8,12 +8,13 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import {StateDataType} from "./redux/state";
+import {StateDataType, updateNewPostText} from "./redux/state";
 import SideBarMenu from "./components/SideBar/SideBar";
 
 
 type AppDataType = {
     state: StateDataType
+    updateNewPostText: (newText: string) => void
     addPost: (postMessage: string) => void
 }
 
@@ -27,7 +28,9 @@ const App: FC<AppDataType> = (props) => {
                 <div className='app-wrapper-content'>
                     <Route path='/profile'
                            render={() => <Profile
-                               state={props.state.profilePage}
+                               profilePage={props.state.profilePage}
+                               newPostText={props.state.profilePage.newPostText}
+                               updateNewPostText={props.updateNewPostText}
                                addPost={props.addPost}
                            />}
                     />
