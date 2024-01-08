@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 import {PostsDataType} from "../../../redux/state";
@@ -10,8 +10,9 @@ type MyPostsType = {
 
 
 const MyPosts: FC<MyPostsType> = (props) => {
-    const newPostTest = React.createRef<HTMLTextAreaElement>();
+    // const newPostTest = React.createRef<HTMLTextAreaElement>();
     const posts = props.posts.map( p => <Post key={p.id} message={p.message} likesCount={p.likesCount} />)
+    const [newValue, setNewValue] = useState<string>('')
 
     const onAddBtnClickHandler = () => {
         const newPostText = newPostTest.current?.value;
@@ -25,6 +26,7 @@ const MyPosts: FC<MyPostsType> = (props) => {
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
+                {/*<textarea ref={newPostTest}></textarea>*/}
                 <textarea ref={newPostTest}></textarea>
             </div>
             <div>

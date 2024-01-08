@@ -1,4 +1,5 @@
 import {v1} from "uuid";
+import {rerenderEntireTree} from "../render";
 
 export type MessageDataType = {
     id: string
@@ -83,6 +84,7 @@ export let addPost = (postMessage: string) => {
         likesCount: 1
     }
     let copyState = {...state}
+    rerenderEntireTree(state)
     return copyState.profilePage.posts.push(newMessage)
 }
 
