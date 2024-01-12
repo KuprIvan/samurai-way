@@ -1,5 +1,4 @@
 import {v1} from "uuid";
-import {rerenderEntireTree} from "../render";
 
 export type MessageDataType = {
     id: string
@@ -40,6 +39,10 @@ export type StateDataType = {
     dialogsPage: DialogsPageType
     profilePage: ProfilePageType
     sideBarMenu: SideBarMenuType
+}
+
+let rerenderEntireTree = (observer: any) => {
+    console.log('State changed' !)
 }
 
 
@@ -94,6 +97,10 @@ export let addPost = (postMessage: string) => {
 export let updateNewPostText = (newText: string) => {
     state.profilePage.newPostText = newText;
     rerenderEntireTree(state);
+}
+
+export const subscribe = (observer: any) => {
+    rerenderEntireTree = observer;
 }
 window.state = state;
 
