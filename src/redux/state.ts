@@ -43,7 +43,7 @@ export type StateDataType = {
 
 export type StoreType = {
     _state: StateDataType,
-    callSubscriber: (observer: any) => void,
+    _callSubscriber: (observer: any) => void,
     addPost: (postMessage: string) => void,
     updateNewPostText: (newText: string) => void,
     subscribe: (observer: any) => void,
@@ -89,7 +89,7 @@ let store: StoreType = {
     getState() {
         return this._state;
     },
-    callSubscriber(observer: any) {
+    _callSubscriber(observer: any) {
         console.log('State changed' !)
     },
     addPost(postMessage: string) {
@@ -99,16 +99,16 @@ let store: StoreType = {
             likesCount: 1
         }
         let copyState = {...this._state}
-        this.callSubscriber(this._state);
+        this._callSubscriber(this._state);
         this._state.profilePage.newPostText = '';
         return copyState.profilePage.posts.push(newMessage)
     },
     updateNewPostText(newText: string)  {
        this._state.profilePage.newPostText = newText;
-        this.callSubscriber(this._state);
+        this._callSubscriber(this._state);
     },
     subscribe(observer: any) {
-        this.callSubscriber = observer;
+        this._callSubscriber = observer;
     }
 }
 
