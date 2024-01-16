@@ -17,3 +17,4 @@ let rerenderEntireTree = (state: StateDataType) => {
 }
 rerenderEntireTree(store.getState());
 store.subscribe(rerenderEntireTree);
+
