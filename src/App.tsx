@@ -11,6 +11,12 @@ import {StateDataType} from "./redux/state";
 import SideBarMenu from "./components/SideBar/SideBar";
 
 
+type AppDataType = {
+    state: StateDataType
+    updateNewPostText: (newText: string) => void
+    addPost: (postMessage: string) => void
+}
+
 const App: FC<PropsType> = (props) => {
 
     return (
@@ -20,7 +26,11 @@ const App: FC<PropsType> = (props) => {
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Route path='/profile'
-                           render={() => <Profile state={props.state.profilePage}
+                           render={() => <Profile
+                               profilePage={props.state.profilePage}
+                               newPostText={props.state.profilePage.newPostText}
+                               updateNewPostText={props.updateNewPostText}
+                               addPost={props.addPost}
                            />}
                     />
                     <Route path='/dialogs' render={() => <Dialogs state={props.state.dialogsPage}/>}
